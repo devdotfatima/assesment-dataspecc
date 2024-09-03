@@ -8,6 +8,20 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        thm: {
+          DEFAULT: "#FEB5F3",
+        },
+        pink: { DEFAULT: "#EC9EA5" },
+        grey: {
+          DEFAULT: "#3A3A3A",
+          100: "#ACACAC",
+        },
+        green: {
+          DEFAULT: "#82D9A2",
+          100: "#27E172",
+        },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
