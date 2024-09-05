@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Postulate",
@@ -16,7 +14,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={` font-inter text-white bg-black h-screen overflow-hidden relative flex flex-col`}
+      >
+        <Header />
+        <main className="flex-grow ">{children}</main>
+      </body>
     </html>
   );
 }
