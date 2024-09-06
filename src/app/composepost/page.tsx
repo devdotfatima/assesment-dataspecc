@@ -70,7 +70,6 @@ const ComposePost = ({}: Props) => {
     const fetchUser = async () => {
       try {
         const res = await axios.get("/api/tweet");
-        // Optionally handle the user data if needed
       } catch (error: any) {
         if (axios.isAxiosError(error) && error.response?.status === 401) {
           router.push("/");

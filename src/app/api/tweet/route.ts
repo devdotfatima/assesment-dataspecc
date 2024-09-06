@@ -3,6 +3,32 @@ import * as twitter from "@/utils/twitterAuth";
 import { OAuth2UserOptions } from "twitter-api-sdk/dist/OAuth2User";
 import { cookies } from "next/headers";
 
+async function getValidToken(): Promise<
+  OAuth2UserOptions["token"] | undefined
+> {
+  const savedToken = cookies().get("token");
+
+  const token: OAuth2UserOptions["token"] | undefined = savedToken
+    ? JSON.parse(savedToken.value)
+    : undefined;
+  if (!token) {
+    throw new Error("No token found in cookies");
+  }
+
+  let latestToken = token;
+  if (token.expires_at && new Date(token.expires_at) < new Date()) {
+    const { token: refreshedToken } = await twitter.refreshToken(token);
+    latestToken = refreshedToken;
+  }
+
+  if (token.expires_at && new Date(token.expires_at) < new Date()) {
+    const { token: refreshedToken } = await twitter.refreshToken(token);
+    latestToken = refreshedToken;
+  }
+
+  return latestToken;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { caption } = await request.json();
@@ -15,28 +41,15 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    const savedToken = cookies().get("token");
-
-    const token: OAuth2UserOptions["token"] | undefined = savedToken
-      ? JSON.parse(savedToken.value)
-      : undefined;
+    const token = await getValidToken();
     if (!token) {
-      throw new Error("No token found in cookies");
-    }
-    console.log(caption, "inside here", token);
-
-    let latestToken = token;
-    if (token.expires_at && new Date(token.expires_at) < new Date()) {
-      const { token: refreshedToken } = await twitter.refreshToken(token);
-      latestToken = refreshedToken;
+      return NextResponse.json(
+        { message: "Authorization required" },
+        { status: 401 }
+      );
     }
 
-    if (token.expires_at && new Date(token.expires_at) < new Date()) {
-      const { token: refreshedToken } = await twitter.refreshToken(token);
-      latestToken = refreshedToken;
-    }
-
-    const response = await twitter.createTweet(latestToken, caption);
+    const response = await twitter.createTweet(token, caption);
 
     return NextResponse.json(response.data);
   } catch (error) {
@@ -53,27 +66,15 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const savedToken = cookies().get("token");
-
-    const token: OAuth2UserOptions["token"] | undefined = savedToken
-      ? JSON.parse(savedToken.value)
-      : undefined;
+    const token = await getValidToken();
     if (!token) {
       return NextResponse.json(
-        {
-          message: "No token found in cookies",
-        },
+        { message: "Authorization required" },
         { status: 401 }
       );
     }
 
-    let latestToken = token;
-    if (token.expires_at && new Date(token.expires_at) < new Date()) {
-      const { token: refreshedToken } = await twitter.refreshToken(token);
-      latestToken = refreshedToken;
-    }
-
-    const user = await twitter.getCurrentUserId(latestToken);
+    const user = await twitter.getCurrentUserId(token);
 
     return NextResponse.json(user);
   } catch (error) {
