@@ -59,7 +59,12 @@ export async function GET(request: NextRequest) {
       ? JSON.parse(savedToken.value)
       : undefined;
     if (!token) {
-      throw new Error("No token found in cookies");
+      return NextResponse.json(
+        {
+          message: "No token found in cookies",
+        },
+        { status: 500 }
+      );
     }
 
     let latestToken = token;
