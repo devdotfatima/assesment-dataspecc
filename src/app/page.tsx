@@ -37,7 +37,7 @@ export default function Home() {
             eiusmod tempor incididunt ut labore.
           </p>
           <div className="flex flex-col items-center sm:items-start justify-center mt-8 sm:mt-6 ">
-            <div className="flex flex-col gap-4 border-[1px] border-grey items-center justify-center h-44 w-48  bg-gradient-to-r from-emerald-900/25 via-emerald-800/30 to-emerald-900/25  rounded-md text-sm  font-inter font-thin">
+            <div className="flex flex-col gap-4 border-[1px] border-grey items-center justify-center h-44 w-full sm:w-48  bg-gradient-to-r from-emerald-900/25 via-emerald-800/30 to-emerald-900/25  rounded-md text-sm  font-inter font-thin">
               <Image
                 src={twitterSVG}
                 alt="Twitter Icon"
