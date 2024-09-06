@@ -4,6 +4,7 @@ import axios from "axios";
 import eyeSvg from "../../assets/eye-scan-svgrepo-com.svg";
 import Image from "next/image";
 import Footer from "@/components/Footer";
+import TweetCard from "@/components/TweetCard";
 
 type Props = {};
 
@@ -52,13 +53,12 @@ const ComposePost = ({}: Props) => {
 
       if (response.data.id) {
         setSuccessMessage("Post published successfully!");
-        setCaption(""); // Reset caption after successful post
+        setCaption("");
         setError("");
       } else {
         setError("Failed to post to Twitter.");
       }
     } catch (error) {
-      // console.error("Failed to post tweet:", error);
       setError("Failed to post tweet.");
     } finally {
       setIsPosting(false);
@@ -96,17 +96,25 @@ const ComposePost = ({}: Props) => {
           )}
         </div>
         <div className="col-span-full lg:col-span-4 bg-grey h-[55%] lg:h-[88.2%] flex flex-col items-center justify-center">
-          <Image
-            src={eyeSvg}
-            alt="View Your Post"
-            width={100}
-            height={100}
-            className="mx-auto my-8"
-          />
-          <div className="w-3/4 border border-dashed border-grey-200 rounded-lg p-4 text-center">
-            <h3 className="text-lg font-bold mb-4">Post Preview</h3>
-            <p className="text-white">{caption || "Your post preview here"}</p>
-          </div>
+          {caption ? (
+            <TweetCard text={caption} />
+          ) : (
+            <>
+              <Image
+                src={eyeSvg}
+                alt="View Your Post"
+                width={100}
+                height={100}
+                className="mx-auto my-8"
+              />
+              <div className="w-3/4 border border-dashed border-grey-200 rounded-lg p-4 text-center">
+                <h3 className="text-lg font-bold mb-4">Post Preview</h3>
+                <p className="text-white">
+                  {caption || "Your post preview here"}
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <Footer secondaryBtnFunctionality={handlePost} />
