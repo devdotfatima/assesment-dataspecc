@@ -4,11 +4,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "../assets/logo.png";
-
-const routes = [
-  { routeName: "My Brand", route: "/" },
-  { routeName: "Post Composer", route: "/composepost" },
-];
+import { routes } from "@/utils/consts";
 
 const Header = () => {
   const pathname = usePathname();

@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import homeImage from "../assets/amico.png";
 import shareSVG from "../assets/share-circle-svgrepo-com 2.svg";
 import twitterSVG from "../assets/twitter_icon.svg";
 import Footer from "@/components/Footer";
+import * as twitter from "@/utils/twitterAuth";
 
 export default function Home() {
   return (
@@ -46,9 +48,15 @@ export default function Home() {
                 className=" rounded-full bg-black p-1.5"
               />
               <p>Twitter</p>
-              <button className="w-10/12 border-[1px] border-grey bg-pos-0 hover:bg-pos-100 bg-size-200 hover:scale-95  py-2 rounded-lg bg-gradient-to-r from-emerald-900/25 via-emerald-800/30 to-emerald-900/25 transition-all duration-150 ease-in">
-                Connect
-              </button>
+              <form action={twitter.login} className="w-full">
+                <button
+                  // onClick={twitter.login}
+                  type="submit"
+                  className="w-10/12 border-[1px] mx-auto flex justify-center  text-center border-grey bg-pos-0 hover:bg-pos-100 bg-size-200 hover:scale-95  py-2 rounded-lg bg-gradient-to-r from-emerald-900/25 via-emerald-800/30 to-emerald-900/25 transition-all duration-150 ease-in"
+                >
+                  Connect
+                </button>
+              </form>
             </div>
           </div>
         </section>

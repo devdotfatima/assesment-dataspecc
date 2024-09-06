@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import axios from "axios";
 import eyeSvg from "../../assets/eye-scan-svgrepo-com.svg";
 import Image from "next/image";
 import Footer from "@/components/Footer";
@@ -9,6 +10,8 @@ type Props = {};
 const ComposePost = ({}: Props) => {
   const [caption, setCaption] = useState(""); // Caption text state
   const [error, setError] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const maxCharacters = 280;
 
@@ -32,18 +35,44 @@ const ComposePost = ({}: Props) => {
 
     setCaption((prevCaption) => prevCaption + newText);
   };
-  const handlePost = () => {
-    alert("Post submitted: " + caption);
+  const handlePost = async () => {
+    if (isPosting) {
+      return;
+    }
+    if (!caption.trim()) {
+      setError("Caption cannot be empty.");
+      return;
+    }
+
+    setIsPosting(true);
+    setError("");
+    setSuccessMessage("");
+    try {
+      const response = await axios.post("/api/tweet", { caption });
+
+      if (response.data.id) {
+        setSuccessMessage("Post published successfully!");
+        setCaption(""); // Reset caption after successful post
+        setError("");
+      } else {
+        setError("Failed to post to Twitter.");
+      }
+    } catch (error) {
+      // console.error("Failed to post tweet:", error);
+      setError("Failed to post tweet.");
+    } finally {
+      setIsPosting(false);
+    }
   };
 
   return (
     <>
-      <div className="grid grid-cols-12  h-screen  py-10   w-full ">
-        <div className="col-span-8 h-full px-8 py-4 border-t-2 border-grey">
-          <div className=" flex flex-col gap-4">
+      <div className=" flex flex-col gap-4 lg:grid grid-cols-12 h-screen py-10 w-full ">
+        <div className="col-span-full lg:col-span-8 h-fit lg:h-full px-8 py-4 border-t-2 border-grey">
+          <div className="flex flex-col  gap-4">
             <h2>Caption</h2>
             <textarea
-              placeholder="type your post here"
+              placeholder="Type your post here"
               value={caption}
               onChange={handleCaptionChange}
               onPaste={handlePaste}
@@ -62,8 +91,11 @@ const ComposePost = ({}: Props) => {
               {error && <span className="text-red-500">{error}</span>}
             </div>
           </div>
+          {successMessage && (
+            <div className="text-green-500 mt-4">{successMessage}</div>
+          )}
         </div>
-        <div className="col-span-4 bg-grey h-[88.2%] flex flex-col items-center justify-center">
+        <div className="col-span-full lg:col-span-4 bg-grey h-[55%] lg:h-[88.2%] flex flex-col items-center justify-center">
           <Image
             src={eyeSvg}
             alt="View Your Post"
