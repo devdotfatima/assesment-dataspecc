@@ -15,10 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` font-inter text-white bg-black h-screen overflow-hidden relative flex flex-col`}
+        className={` font-inter text-white bg-black h-screen sm:overflow-hidden relative flex flex-col`}
       >
         <Header />
-        <main className="flex-grow ">{children}</main>
+        <main className="flex-grow overflow-y-auto ">{children}</main>
       </body>
     </html>
   );

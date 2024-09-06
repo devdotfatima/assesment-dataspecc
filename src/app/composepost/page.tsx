@@ -1,15 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import eyeSvg from "../../assets/eye-scan-svgrepo-com.svg";
 import Image from "next/image";
-import Footer from "@/components/Footer";
 import TweetCard from "@/components/TweetCard";
 
 type Props = {};
 
 const ComposePost = ({}: Props) => {
-  const [caption, setCaption] = useState(""); // Caption text state
+  const router = useRouter();
+  const [caption, setCaption] = useState("");
   const [error, setError] = useState("");
   const [isPosting, setIsPosting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -65,12 +66,24 @@ const ComposePost = ({}: Props) => {
     }
   };
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get("/api/tweet");
+
+      if (res.data.username) {
+      } else {
+        router.push("/");
+      }
+    };
+
+    fetchUser();
+  }, []);
   return (
     <>
-      <div className=" flex flex-col gap-4 lg:grid grid-cols-12 h-screen py-10 w-full ">
-        <div className="col-span-full lg:col-span-8 h-fit lg:h-full px-8 py-4 border-t-2 border-grey">
-          <div className="flex flex-col  gap-4">
-            <h2>Caption</h2>
+      <div className=" flex flex-col  gap-3  h-full sm:pt-12 w-full px-8   ">
+        <div className="  lg:h-1/3   py-4 ">
+          <div className="flex flex-col items-end  gap-4">
+            <h2 className="w-full text-left">Caption</h2>
             <textarea
               placeholder="Type your post here"
               value={caption}
@@ -80,7 +93,7 @@ const ComposePost = ({}: Props) => {
             />
             <div className="flex justify-between items-center mt-2">
               <span
-                className={`text-sm ${
+                className={`text-sm text-left ${
                   caption.length > maxCharacters
                     ? "text-red-500"
                     : "text-gray-400"
@@ -90,12 +103,18 @@ const ComposePost = ({}: Props) => {
               </span>
               {error && <span className="text-red-500">{error}</span>}
             </div>
+            <button
+              onClick={handlePost}
+              className="flex items-center justify-center w-32 gap-2 bg-gradient-to-r from-purple to-pink hover:bg-gradient-to-tr transition-all hover:scale-95 duration-100 ease-in text-white rounded-md px-4 py-2"
+            >
+              Post
+            </button>
           </div>
           {successMessage && (
             <div className="text-green-500 mt-4">{successMessage}</div>
           )}
         </div>
-        <div className="col-span-full lg:col-span-4 bg-grey h-[55%] lg:h-[88.2%] flex flex-col items-center justify-center">
+        <div className=" bg-grey py-20 min-h-80 lg:h-2/3 flex flex-col items-center justify-center rounded-lg">
           {caption ? (
             <TweetCard text={caption} />
           ) : (
@@ -117,7 +136,7 @@ const ComposePost = ({}: Props) => {
           )}
         </div>
       </div>
-      <Footer secondaryBtnFunctionality={handlePost} />
+      {/* <Footer secondaryBtnFunctionality={handlePost} /> */}
     </>
   );
 };

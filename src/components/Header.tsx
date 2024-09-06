@@ -18,7 +18,7 @@ const Header = () => {
         </div>
 
         {/* Navigation Section */}
-        <nav className="flex space-x-8">
+        {/* <nav className="flex space-x-8">
           {routes.map(({ routeName, route }) => (
             <Link
               key={route}
@@ -32,7 +32,7 @@ const Header = () => {
               {routeName}
             </Link>
           ))}
-        </nav>
+        </nav> */}
       </div>
     </header>
   );
