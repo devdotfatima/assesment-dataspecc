@@ -81,12 +81,10 @@ export const getCurrentUserId = async (token: OAuth2UserOptions["token"]) => {
   }
 
   if (!res.data?.id) {
-    console.log(res.data);
-
     throw new Error("User ID not found");
   }
 
-  return res.data.id;
+  return res.data;
 };
 
 export const createTweet = async (
@@ -94,5 +92,6 @@ export const createTweet = async (
   text: string
 ) => {
   const { client } = getTwitterClients(token);
+
   return client.tweets.createTweet({ text });
 };

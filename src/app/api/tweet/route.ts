@@ -69,7 +69,6 @@ export async function GET(request: NextRequest) {
     }
 
     const user = await twitter.getCurrentUserId(latestToken);
-    console.log(user);
 
     return NextResponse.json(user);
   } catch (error) {
