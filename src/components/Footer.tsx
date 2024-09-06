@@ -2,13 +2,9 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { FooterPropsT } from "@/utils/types";
 
-type Props = {
-  secondaryBtnText?: string;
-  secondaryBtnFunctionality?: () => void;
-};
-
-const Footer = ({ secondaryBtnFunctionality }: Props) => {
+const Footer = ({ secondaryBtnFunctionality }: FooterPropsT) => {
   const pathname = usePathname();
   return (
     <footer className="w-full absolute bottom-0 h-20 border-t-2 border-grey bg-[#181818] font-light text-sm flex items-center">
