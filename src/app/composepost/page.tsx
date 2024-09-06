@@ -68,11 +68,15 @@ const ComposePost = ({}: Props) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get("/api/tweet");
-      console.log(res.data);
-      if (res.status === 401) {
-        router.push("/");
-        return;
+      try {
+        const res = await axios.get("/api/tweet");
+        // Optionally handle the user data if needed
+      } catch (error: any) {
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          router.push("/");
+        } else {
+          console.error("Error fetching user:", error);
+        }
       }
     };
 

@@ -16,9 +16,6 @@ export default function Home() {
           className="mx-auto hidden sm:block sm:mb-8 h-72 w-72 "
         />
         <section className="  flex flex-col sm:gap-4 ">
-          {/* <p className="tracking-widest">
-            1<span className="text-grey-100">/5</span>
-          </p> */}
           <div className="flex items-center gap-4">
             <Image
               src={shareSVG}
