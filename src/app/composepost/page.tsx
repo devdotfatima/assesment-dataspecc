@@ -36,6 +36,9 @@ const ComposePost = ({}: Props) => {
     setCaption((prevCaption) => prevCaption + newText);
   };
   const handlePost = async () => {
+    if (isPosting) {
+      return;
+    }
     if (!caption.trim()) {
       setError("Caption cannot be empty.");
       return;

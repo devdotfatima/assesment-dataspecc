@@ -58,20 +58,11 @@ export const requestAccessToken = async (code: string, state: string) => {
   return authClient.requestAccessToken(code);
 };
 
-/**
- * Refreshes the access token for Twitter authentication.
- *
- * @param token - The OAuth2 user token.
- * @returns A promise that resolves to the refreshed access token.
- */
 export const refreshToken = async (token?: OAuth2UserOptions["token"]) => {
   const { authClient } = getTwitterClients(token);
   return authClient.refreshAccessToken();
 };
 
-/**
- * Logs out the user from Twitter by revoking the access token and deleting the token from cookies.
- */
 export const logout = async () => {
   const token = getTwitterTokenFromCookies();
   const { authClient } = getTwitterClients(token);
@@ -80,12 +71,6 @@ export const logout = async () => {
   redirect("/");
 };
 
-/**
- * Retrieves the current user's ID from Twitter API using the provided token.
- * @param token - The OAuth2 token for authentication.
- * @returns The current user's ID.
- * @throws If there are errors returned from the API or if the user ID is not found.
- */
 export const getCurrentUserId = async (token: OAuth2UserOptions["token"]) => {
   const { client } = getTwitterClients(token);
 
@@ -102,12 +87,6 @@ export const getCurrentUserId = async (token: OAuth2UserOptions["token"]) => {
   return res.data.id;
 };
 
-/**
- * Creates a new tweet using the provided token and text.
- * @param token - The OAuth2 user token.
- * @param text - The content of the tweet.
- * @returns A Promise that resolves to the created tweet.
- */
 export const createTweet = async (
   token: OAuth2UserOptions["token"],
   text: string
