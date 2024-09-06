@@ -11,11 +11,12 @@ const TweetCard = ({ text }: TweetCardPropsT) => {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get("/api/tweet");
-      setUser(res.data);
 
-      // if (data.user) {
-      //   setUser(data.user);
-      // }
+      if (res.data) {
+        console.log(res.data);
+
+        setUser(res.data);
+      }
     };
 
     fetchUser();
@@ -30,8 +31,8 @@ const TweetCard = ({ text }: TweetCardPropsT) => {
             <div className="bg-white w-6 h-6"></div>
           </div>
           <div>
-            <p className="font-bold">{user.name}</p>
-            <p className="text-gray-400">@{user.username}</p>
+            <p className="font-bold">{user?.name}</p>
+            <p className="text-gray-400">@{user?.username}</p>
           </div>
         </div>
 
