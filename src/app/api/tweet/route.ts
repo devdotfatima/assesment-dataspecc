@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
         {
           message: "No token found in cookies",
         },
-        { status: 500 }
+        { status: 401 }
       );
     }
 

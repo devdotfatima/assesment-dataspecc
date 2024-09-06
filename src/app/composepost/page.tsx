@@ -69,10 +69,10 @@ const ComposePost = ({}: Props) => {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get("/api/tweet");
-      console.log(res);
-      if (res.data.username) {
-      } else {
+      console.log(res.data);
+      if (res.status === 401) {
         router.push("/");
+        return;
       }
     };
 
