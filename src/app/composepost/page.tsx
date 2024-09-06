@@ -91,7 +91,7 @@ const ComposePost = ({}: Props) => {
               onPaste={handlePaste}
               className="w-full border-grey border-[1px] outline-none ring-0 focus:outline-grey-100 focus:border-0 bg-grey-100/10 resize-none h-32 rounded px-4 py-2"
             />
-            <div className="flex justify-between items-center mt-2">
+            <div className="flex justify-between items-center mt-2 w-full">
               <span
                 className={`text-sm text-left ${
                   caption.length > maxCharacters
@@ -101,8 +101,8 @@ const ComposePost = ({}: Props) => {
               >
                 {caption.length}/{maxCharacters} characters
               </span>
-              {error && <span className="text-red-500">{error}</span>}
             </div>
+
             <button
               onClick={handlePost}
               className="flex items-center justify-center w-32 gap-2 bg-gradient-to-r from-purple to-pink hover:bg-gradient-to-tr transition-all hover:scale-95 duration-100 ease-in text-white rounded-md px-4 py-2"
@@ -110,6 +110,7 @@ const ComposePost = ({}: Props) => {
               Post
             </button>
           </div>
+          {error && <span className="text-red-500 text-left">{error}</span>}
           {successMessage && (
             <div className="text-green-500 mt-4">{successMessage}</div>
           )}
