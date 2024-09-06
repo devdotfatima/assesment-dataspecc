@@ -52,8 +52,8 @@ This project is a **Next.js 14** application that integrates with the **Twitter 
 1. **Clone the repository**:
 
 ```bash
-git clone https://github.com/yourusername/twitter-integration-app.git
-cd twitter-integration-app
+git clone https://github.com/devdotfatima/assesment-dataspecc
+cd assesment-dataspecc
 ```
 
 2. **Install dependencies**:
