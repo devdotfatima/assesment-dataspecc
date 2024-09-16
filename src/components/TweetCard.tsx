@@ -8,19 +8,19 @@ import axios from "axios";
 const TweetCard = ({ text }: TweetCardPropsT) => {
   const [user, setUser] = useState<any>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axios.get("/api/tweet");
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const res = await axios.get("/api/tweet");
 
-      if (res.data) {
-        console.log(res.data);
+  //     if (res.data) {
+  //       console.log(res.data);
 
-        setUser(res.data);
-      }
-    };
+  //       setUser(res.data);
+  //     }
+  //   };
 
-    fetchUser();
-  }, []);
+  //   fetchUser();
+  // }, []);
 
   return (
     <div className="w-10/12 mx-auto bg-white text-black rounded-xl shadow-md p-4 space-y-4">

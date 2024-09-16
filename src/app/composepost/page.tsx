@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BiPencil, BiPlus } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import { FiInfo } from "react-icons/fi";
@@ -61,27 +61,29 @@ const ComposePost = ({}: Props) => {
         toast.error("Failed to post to Twitter.");
       }
     } catch (error) {
+      console.log(error);
+
       toast.error("Failed to post tweet.");
     } finally {
       setIsPosting(false);
     }
   };
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await axios.get("/api/tweet");
-      } catch (error: any) {
-        if (axios.isAxiosError(error) && error.response?.status === 401) {
-          router.push("/");
-        } else {
-          console.error("Error fetching user:", error);
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const res = await axios.get("/api/tweet");
+  //     } catch (error: any) {
+  //       if (axios.isAxiosError(error) && error.response?.status === 401) {
+  //         router.push("/");
+  //       } else {
+  //         console.error("Error fetching user:", error);
+  //       }
+  //     }
+  //   };
 
-    fetchUser();
-  }, [router]);
+  //   fetchUser();
+  // }, [router]);
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />

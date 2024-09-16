@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as twitter from "@/utils/twitterAuth";
+import TwitterService from "@/utils/twitterService";
+
 import { OAuth2UserOptions } from "twitter-api-sdk/dist/OAuth2User";
 import { cookies } from "next/headers";
 
+const twitterServiceInstance = TwitterService.getInstance();
 async function getValidToken(): Promise<
   OAuth2UserOptions["token"] | undefined
 > {
@@ -17,12 +19,16 @@ async function getValidToken(): Promise<
 
   let latestToken = token;
   if (token.expires_at && new Date(token.expires_at) < new Date()) {
-    const { token: refreshedToken } = await twitter.refreshToken(token);
+    const { token: refreshedToken } = await twitterServiceInstance.refreshToken(
+      token
+    );
     latestToken = refreshedToken;
   }
 
   if (token.expires_at && new Date(token.expires_at) < new Date()) {
-    const { token: refreshedToken } = await twitter.refreshToken(token);
+    const { token: refreshedToken } = await twitterServiceInstance.refreshToken(
+      token
+    );
     latestToken = refreshedToken;
   }
 
@@ -49,7 +55,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const response = await twitter.createTweet(token, caption);
+    const response = await twitterServiceInstance.createTweet(caption);
 
     return NextResponse.json(response.data);
   } catch (error) {
@@ -74,7 +80,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const user = await twitter.getCurrentUserId(token);
+    const user = await twitterServiceInstance.getCurrentUserId(token);
 
     return NextResponse.json(user);
   } catch (error) {

@@ -2,9 +2,10 @@ import Image from "next/image";
 import homeImage from "../assets/amico.png";
 import shareSVG from "../assets/share-circle-svgrepo-com 2.svg";
 import twitterSVG from "../assets/Twitter.svg";
-import * as twitter from "@/utils/twitterAuth";
+import TwitterService from "@/utils/twitterService";
 
 export default function Home() {
+  const twitterServiceInstance = TwitterService.getInstance();
   return (
     <>
       <div className="flex flex-col flex-grow h-full  items-center justify-start py-10 px-8 md:px-8 max-w-4xl mx-auto w-full ">
@@ -43,7 +44,7 @@ export default function Home() {
                 className=" rounded-full bg-black p-1.5"
               />
               <p>Twitter</p>
-              <form action={twitter.login} className="w-full">
+              <form action={twitterServiceInstance.login} className="w-full">
                 <button
                   // onClick={twitter.login}
                   type="submit"
