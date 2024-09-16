@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import TwitterService from "@/utils/twitterService";
 
 export const GET = async (request: NextRequest, res: NextResponse) => {
@@ -21,6 +20,5 @@ export const GET = async (request: NextRequest, res: NextResponse) => {
     httpOnly: true,
     secure: true,
   });
-
-  return redirect("/composepost");
+  return NextResponse.redirect("/composepost");
 };
