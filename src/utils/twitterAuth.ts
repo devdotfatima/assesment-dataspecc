@@ -7,9 +7,9 @@ import { OAuth2UserOptions } from "twitter-api-sdk/dist/OAuth2User";
 
 const getTwitterClients = (token?: OAuth2UserOptions["token"]) => {
   const authClient = new auth.OAuth2User({
-    client_id: process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID!,
-    client_secret: process.env.NEXT_PUBLIC_TWITTER_CLIENT_SECRET!,
-    callback: process.env.NEXT_PUBLIC_TWITTER_REDIRECT_URI!,
+    client_id: process.env.NEXT_TWITTER_CLIENT_ID!,
+    client_secret: process.env.NEXT_TWITTER_CLIENT_SECRET!,
+    callback: process.env.NEXT_TWITTER_REDIRECT_URI!,
     scopes: ["tweet.write", "users.read", "tweet.read", "offline.access"],
     token,
   });

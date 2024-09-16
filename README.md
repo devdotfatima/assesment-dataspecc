@@ -15,29 +15,27 @@ This project is a **Next.js 14** application that integrates with the **Twitter 
 ```
 ├── app/
 │   ├── api/
-│   │   ├── tweet/ 
+│   │   ├── tweet/
 │   │   ├──────  route.ts        # API route for posting tweets
-│   │   ├── auth/                 
+│   │   ├── auth/
 │   │   └──────callback/
 │   │   └────────────── route.ts # Twitter OAuth flow and API requests
-│   ├── composepost/              
+│   ├── composepost/
 │   ├────────────page.tsx        # Main page for composing and posting tweets
-|   ├── layout.tsx 
+|   ├── layout.tsx
 │   └── page.tsx                 # Home page
 ├── components/
 │   ├── Footer.tsx                # Footer component with post button
 │   └── Header.tsx                # Optional Header
 ├── utils/
 │   ├── twitterAuth.ts            # Twitter OAuth and API request helper functions
-│   ├── types.ts            
-│   ├── consts.ts            
+│   ├── types.ts
+│   ├── consts.ts
 ├── assets/                       # Image assets for UI
 ├── public/                       # Public directory for static assets
 ├── .env                          # Environment variables (add your own keys)
 └── README.md                     # Instructions for setting up the project
 ```
-
-
 
 ## Getting Started
 
@@ -69,16 +67,16 @@ yarn install
 Create a `.env` file in the root of the project and add your Twitter API keys and other environment variables:
 
 ```bash
-NEXT_PUBLIC_TWITTER_API_KEY=
-NEXT_PUBLIC_TWITTER_API_KEY_SECRET=
-NEXT_PUBLIC_TWITTER_BEARER_TOKEN=
-NEXT_PUBLIC_TWITTER_ACCESS_TOKEN=
-NEXT_PUBLIC_TWITTER_ACCESS_SECRET=
-NEXT_PUBLIC_TWITTER_CLIENT_ID=
-NEXT_PUBLIC_TWITTER_CLIENT_SECRET=
+NEXT_TWITTER_API_KEY=
+NEXT_TWITTER_API_KEY_SECRET=
+NEXT_TWITTER_BEARER_TOKEN=
+NEXT_TWITTER_ACCESS_TOKEN=
+NEXT_TWITTER_ACCESS_SECRET=
+NEXT_TWITTER_CLIENT_ID=
+NEXT_TWITTER_CLIENT_SECRET=
 
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_TWITTER_REDIRECT_URI=http://localhost:3000/api/auth/callback
+NEXT_APP_URL=http://localhost:3000
+NEXT_TWITTER_REDIRECT_URI=http://localhost:3000/api/auth/callback
 ```
 
 4. **Run the development server**:
@@ -97,7 +95,7 @@ Your application should now be running at `http://localhost:3000`.
 
 - **Authentication**: We use **NextAuth.js** for OAuth 2.0 with Twitter. Upon successful login, the access token is stored in cookies for future API requests.
 - **Tweet Posting**: A POST request is sent to the `/api/tweet` route, which uses the access token to post tweets on behalf of the authenticated user.
-  
+
 **API Route: `/api/tweet`**
 
 This API route is responsible for:
@@ -106,11 +104,9 @@ This API route is responsible for:
 2. Using the **Twitter API SDK** to post the tweet.
 3. Handling errors and sending appropriate responses.
 
-
 ## Troubleshooting
 
 ### Common Issues:
 
-- **Invalid Redirect URI**: Ensure that the `NEXT_PUBLIC_TWITTER_REDIRECT_URI` matches exactly what you have configured in the Twitter Developer Portal.
+- **Invalid Redirect URI**: Ensure that the `NEXT_TWITTER_REDIRECT_URI` matches exactly what you have configured in the Twitter Developer Portal.
 - **Rate Limits**: The Twitter API has rate limits for requests. Check the [Twitter Developer Documentation](https://developer.twitter.com/en/docs/twitter-api) for more information on these limits.
-

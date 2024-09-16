@@ -5,7 +5,7 @@ import Logo from "../assets/logo.png";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between px-10 h-16 bg-[#181818] border-b-2 border-grey">
+    <header className="flex items-center justify-between px-10 h-16 lg:h-[7vh] bg-[#181818] border-b-2 border-grey">
       <div className="flex items-center space-x-20">
         <div className="flex items-end">
           <Image src={Logo} alt="Logo" width={30} height={30} />
