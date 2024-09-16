@@ -41,5 +41,5 @@ export function middleware(req: NextRequest) {
 
 // Apply middleware to both API and page routes
 export const config = {
-  matcher: ["/api/:path*", "/composepost/:path*"], // Add both API and pages here
+  matcher: ["/api/tweet/:path*", "/composepost/:path*"], // Add both API and pages here
 };

@@ -40,15 +40,17 @@ class TwitterService {
   public async authenticate(token: OAuth2UserOptions["token"]): Promise<void> {
     this.setToken(token);
   }
+  public async getAuthUrl(): Promise<string | null> {
+    try {
+      const url = this.authClient.generateAuthURL({
+        state: "state",
+        code_challenge: "y_SfRG4BmOES02uqWeIkIgLQAlTBggyf_G7uKT51ku8",
+      });
 
-  public async login(): Promise<void> {
-    const url = this.authClient.generateAuthURL({
-      state: "state",
-      code_challenge: "y_SfRG4BmOES02uqWeIkIgLQAlTBggyf_G7uKT51ku8",
-    });
-    if (url) {
-      // Redirect to the URL for authentication
-      window.location.href = url;
+      return url || null;
+    } catch (error) {
+      console.error("Error generating auth URL:", error);
+      return null;
     }
   }
 

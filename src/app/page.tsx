@@ -44,7 +44,7 @@ export default function Home() {
                 className=" rounded-full bg-black p-1.5"
               />
               <p>Twitter</p>
-              <form action={twitterServiceInstance.login} className="w-full">
+              <form action={"/api/auth/login"} className="w-full">
                 <button
                   // onClick={twitter.login}
                   type="submit"
