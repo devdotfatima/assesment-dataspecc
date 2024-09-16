@@ -9,17 +9,15 @@ import eyeSvg from "../../assets/eye-scan-svgrepo-com.svg";
 import twitterSVG from "../../assets/twitter_icon_white.svg";
 import TweetCard from "@/components/TweetCard";
 import Accordion from "@/components/ui/Accordion";
+import toast, { Toaster } from "react-hot-toast";
 
 type Props = {};
 
 const ComposePost = ({}: Props) => {
   const [idea, setIdea] = useState("Untitled");
-
   const router = useRouter();
   const [caption, setCaption] = useState("");
-  const [error, setError] = useState("");
   const [isPosting, setIsPosting] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
 
   const maxCharacters = 280;
 
@@ -27,9 +25,8 @@ const ComposePost = ({}: Props) => {
     const value = e.target.value;
     if (value.length <= maxCharacters) {
       setCaption(value);
-      setError("");
     } else {
-      setError("You have exceeded the 280 character limit.");
+      toast.error("You have exceeded the 280 character limit.");
     }
   };
 
@@ -48,25 +45,23 @@ const ComposePost = ({}: Props) => {
       return;
     }
     if (!caption.trim()) {
-      setError("Caption cannot be empty.");
+      toast.error("Caption cannot be empty.");
       return;
     }
 
     setIsPosting(true);
-    setError("");
-    setSuccessMessage("");
+
     try {
       const response = await axios.post("/api/tweet", { caption });
 
       if (response.data.id) {
-        setSuccessMessage("Post published successfully!");
+        toast.success("Post published successfully!");
         setCaption("");
-        setError("");
       } else {
-        setError("Failed to post to Twitter.");
+        toast.error("Failed to post to Twitter.");
       }
     } catch (error) {
-      setError("Failed to post tweet.");
+      toast.error("Failed to post tweet.");
     } finally {
       setIsPosting(false);
     }
@@ -86,9 +81,10 @@ const ComposePost = ({}: Props) => {
     };
 
     fetchUser();
-  }, []);
+  }, [router]);
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex bg-[#181818] h-32 lg:h-[14vh]">
         <div className="p-5 flex flex-col items-center justify-center gap-2 border-r border-grey">
           <button className=" py-6  bg-gradient-to-r from-purple to-pink w-16 flex justify-center  rounded-full">
@@ -144,7 +140,8 @@ const ComposePost = ({}: Props) => {
                   </label>
                   <textarea
                     value={caption}
-                    onChange={(e) => setCaption(e.target.value)}
+                    onChange={handleCaptionChange}
+                    onPaste={handlePaste}
                     placeholder="Enter your Caption here"
                     className="bg-grey/40 text-white font-light tracking-wide resize-none placeholder-gray-500 rounded-md w-full p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-700 h-24"
                   />
