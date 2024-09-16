@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { TweetCardPropsT } from "@/utils/types";
-import twitterSVG from "../assets/Twitter_icon_white.svg";
+import twitterSVG from "../assets/TwitterWhite.svg";
 import axios from "axios";
 
 const TweetCard = ({ text }: TweetCardPropsT) => {

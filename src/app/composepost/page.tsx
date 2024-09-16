@@ -6,7 +6,7 @@ import { FiInfo } from "react-icons/fi";
 import Image from "next/image";
 import axios from "axios";
 import eyeSvg from "../../assets/eye-scan-svgrepo-com.svg";
-import twitterSVG from "../../assets/twitter_icon_white.svg";
+import twitterSVG from "../../assets/TwitterWhite.svg";
 import TweetCard from "@/components/TweetCard";
 import Accordion from "@/components/ui/Accordion";
 import toast, { Toaster } from "react-hot-toast";

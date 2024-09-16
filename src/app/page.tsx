@@ -1,7 +1,7 @@
 import Image from "next/image";
 import homeImage from "../assets/amico.png";
 import shareSVG from "../assets/share-circle-svgrepo-com 2.svg";
-import twitterSVG from "../assets/twitter_icon.svg";
+import twitterSVG from "../assets/Twitter.svg";
 import * as twitter from "@/utils/twitterAuth";
 
 export default function Home() {
