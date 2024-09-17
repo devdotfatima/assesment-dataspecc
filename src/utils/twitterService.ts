@@ -36,10 +36,17 @@ class TwitterService {
     });
     this.client = new Client(this.authClient);
   }
+  private generateAuthURL(authClient: auth.OAuth2User) {
+    return authClient.generateAuthURL({
+      state: "state",
+      code_challenge: "y_SfRG4BmOES02uqWeIkIgLQAlTBggyf_G7uKT51ku8",
+    });
+  }
 
   public async authenticate(token: OAuth2UserOptions["token"]): Promise<void> {
     this.setToken(token);
   }
+
   public async getAuthUrl(): Promise<string | null> {
     try {
       const url = this.authClient.generateAuthURL({
@@ -60,10 +67,12 @@ class TwitterService {
     }
 
     const token = this.getTokenFromCookies();
+
     if (token) {
       this.setToken(token);
     }
 
+    this.generateAuthURL(this.authClient);
     return this.authClient.requestAccessToken(code);
   }
 
@@ -97,6 +106,14 @@ class TwitterService {
   }
 
   public async createTweet(text: string) {
+    const token = this.getTokenFromCookies();
+    if (token) {
+      this.setToken(token);
+    }
+    console.log({ token, text });
+
+    this.generateAuthURL(this.authClient);
+
     const response = await this.client.tweets.createTweet({ text });
     return response;
   }

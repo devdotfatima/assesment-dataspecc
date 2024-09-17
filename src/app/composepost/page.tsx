@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import { BiPencil, BiPlus } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import { FiInfo } from "react-icons/fi";
+import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import axios from "axios";
 import eyeSvg from "../../assets/eye-scan-svgrepo-com.svg";
 import twitterSVG from "../../assets/TwitterWhite.svg";
 import TweetCard from "@/components/TweetCard";
 import Accordion from "@/components/ui/Accordion";
-import toast, { Toaster } from "react-hot-toast";
 
 type Props = {};
 
@@ -48,20 +48,23 @@ const ComposePost = ({}: Props) => {
       toast.error("Caption cannot be empty.");
       return;
     }
-
+    toast.loading("Posting your Tweet");
     setIsPosting(true);
 
     try {
       const response = await axios.post("/api/tweet", { caption });
 
       if (response.data.id) {
+        toast.dismiss();
         toast.success("Post published successfully!");
         setCaption("");
       } else {
+        toast.dismiss();
         toast.error("Failed to post to Twitter.");
       }
     } catch (error) {
       console.log(error);
+      toast.dismiss();
 
       toast.error("Failed to post tweet.");
     } finally {
@@ -69,24 +72,36 @@ const ComposePost = ({}: Props) => {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const res = await axios.get("/api/tweet");
-  //     } catch (error: any) {
-  //       if (axios.isAxiosError(error) && error.response?.status === 401) {
-  //         router.push("/");
-  //       } else {
-  //         console.error("Error fetching user:", error);
-  //       }
-  //     }
-  //   };
-
-  //   fetchUser();
-  // }, [router]);
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            border: "1px solid #3A3A3A",
+            padding: "16px",
+            color: "#ACACAC",
+            background: "black",
+          },
+          error: {
+            iconTheme: {
+              primary: "#000",
+              secondary: "red",
+            },
+          },
+          success: {
+            iconTheme: {
+              primary: "#000",
+              secondary: "green",
+            },
+          },
+          iconTheme: {
+            primary: "#000",
+            secondary: "#fff",
+          },
+        }}
+      />
       <div className="flex bg-[#181818] h-32 lg:h-[14vh]">
         <div className="p-5 flex flex-col items-center justify-center gap-2 border-r border-grey">
           <button className=" py-6  bg-gradient-to-r from-purple to-pink w-16 flex justify-center  rounded-full">

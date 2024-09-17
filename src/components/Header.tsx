@@ -9,7 +9,9 @@ const Header = () => {
       <div className="flex items-center space-x-20">
         <div className="flex items-end">
           <Image src={Logo} alt="Logo" width={30} height={30} />
-          <span className="ml-1 text-sm font-bold">Let&rsquo;s do it</span>
+          <span className="ml-1 text-sm font-bold hidden sm:block">
+            Let&rsquo;s do it
+          </span>
         </div>
       </div>
     </header>

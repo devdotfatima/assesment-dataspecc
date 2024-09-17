@@ -7,20 +7,43 @@ import axios from "axios";
 
 const TweetCard = ({ text }: TweetCardPropsT) => {
   const [user, setUser] = useState<any>(null);
+  const [tweetTimestamp, setTweetTimestamp] = useState<{
+    month: string;
+    date: number;
+    year: number;
+    time: string;
+  } | null>(null);
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const res = await axios.get("/api/tweet");
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get("/api/tweet");
 
-  //     if (res.data) {
-  //       console.log(res.data);
+      if (res.data) {
+        console.log(res.data);
 
-  //       setUser(res.data);
-  //     }
-  //   };
+        setUser(res.data);
+      }
+    };
 
-  //   fetchUser();
-  // }, []);
+    fetchUser();
+
+    const now = new Date();
+
+    const dateParts = {
+      month: now.toLocaleString("en-US", { month: "short" }),
+      date: now.getDate(),
+      year: now.getFullYear(),
+      time: now.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }), // e.g., "6:23 AM"
+    };
+
+    console.log(dateParts);
+
+    setTweetTimestamp(dateParts);
+  }, []);
 
   return (
     <div className="w-10/12 mx-auto bg-white text-black rounded-xl shadow-md p-4 space-y-4">
@@ -36,44 +59,17 @@ const TweetCard = ({ text }: TweetCardPropsT) => {
           </div>
         </div>
 
-        <Image
-          src={twitterSVG}
-          alt="twitter icon"
-          width={20}
-          height={20}
-          // className="mx-auto my-8"
-        />
+        <Image src={twitterSVG} alt="twitter icon" width={20} height={20} />
       </div>
 
       {/* Tweet Text */}
-      <p className="text-sm">
-        {text}
-        {/* <span className="text-blue-400">#myfirsttweet</span>{" "}
-        <span className="text-blue-400">twitter.com</span>{" "}
-        <span className="text-blue-400">@twitter</span> */}
-      </p>
+      <p className="text-sm">{text}</p>
 
-      {/* Image Grid */}
-      {/* <div className="grid grid-cols-3 gap-1">
-        <div className="col-span-2 bg-black w-full h-16"></div>
-        <div className="bg-black w-full h-16"></div>
-      </div> */}
-
-      {/* Website Preview */}
-      {/* <div className="flex items-center space-x-2 border border-gray-700 rounded p-2">
-        <div className="bg-black w-12 h-12"></div>
-        <div>
-          <p className="text-sm">xample.com</p>
-          <p className="text-xs text-gray-400">
-            The quick brown fox jumps over...
-          </p>
-          <p className="text-xs text-gray-400">
-            The quick brown fox jumps over the lazy dog.
-          </p>
-        </div>
-      </div> */}
       {/* Timestamp */}
-      <p className="text-gray-400 text-xs text-left">00:00 AM · Jan 0, 0000</p>
+      <p className="text-gray-400 text-xs text-left">
+        {tweetTimestamp?.time} · {tweetTimestamp?.month} {tweetTimestamp?.date},{" "}
+        {tweetTimestamp?.year}
+      </p>
       <hr />
       {/* Tweet Stats */}
       <div className="flex justify-start gap-3 text-gray-400 text-xs">

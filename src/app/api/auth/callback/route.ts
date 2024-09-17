@@ -18,15 +18,28 @@ export const GET = async (request: NextRequest) => {
     const twitterServiceInstance = TwitterService.getInstance();
     const token = await twitterServiceInstance.requestAccessToken(code, state);
 
-    console.log(token);
+    const cookiesStore = cookies();
 
-    const cookiesStore = cookies(); // Get cookies instance
     cookiesStore.set("token", JSON.stringify(token.token), {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Secure flag only in production
+      secure: process.env.NODE_ENV === "production",
     });
 
-    return NextResponse.redirect("/composepost");
+    const sessionExpirationDate = new Date();
+    sessionExpirationDate.setDate(sessionExpirationDate.getDate() + 30);
+
+    cookiesStore.set(
+      "session_expiration",
+      sessionExpirationDate.toISOString(),
+      {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 30 * 24 * 60 * 60,
+      }
+    );
+
+    const redirectUrl = new URL("/composepost", request.url);
+    return NextResponse.redirect(redirectUrl.toString());
   } catch (error) {
     console.error("Error requesting access token:", error);
     return NextResponse.json(

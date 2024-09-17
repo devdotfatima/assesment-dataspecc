@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import TwitterService from "@/utils/twitterService";
-
 import { OAuth2UserOptions } from "twitter-api-sdk/dist/OAuth2User";
 import { cookies } from "next/headers";
 
